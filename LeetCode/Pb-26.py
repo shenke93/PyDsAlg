@@ -1,4 +1,4 @@
-# Remove Element
+# Remove Duplicates from Sorted Array
 
 # --------------- Method 1 -----------------
 # Using a support list
