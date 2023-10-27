@@ -7,13 +7,13 @@
 
 def majorityElement(nums: list[int]) -> int:
     d = {}
-    for e in nums:  # Make the dictionary
+    for e in nums:  # make the dictionary
         if e not in d.keys():
             d[e] = 1
         else:
             d[e] += 1
 
-    #   Return the key with the largest value
+    #   return the key with the largest value
     return max(d, key=lambda k: d.get(k))
 
 # ---------- Method 2 -------------
