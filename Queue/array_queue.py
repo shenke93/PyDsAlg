@@ -1,3 +1,8 @@
+# Queue implementation using an array
+# Elements are waiting in line: first in first out (served)
+# Add (waiting) element at the end: enqueue, O(1) amortized
+# Serve (waiting) element at the front: dequeue, O(1) amortized
+
 class Empty(Exception):
     pass
 
@@ -36,6 +41,9 @@ class ArrayQueue:
         answer = self._data[self._front]
         self._data[self._front] = None      # garbage collection
         self._front = (self._front + 1) % len(self._data)
+        self._size -= 1
+        if 0 < self._size < len(self._data) // 4:
+            self._resize(len(self._data) // 2)
         return answer
     
     def enqueue(self, e: object):
@@ -61,29 +69,35 @@ if __name__ == '__main__':
     # Test __init__()
     q1 = ArrayQueue()
 
-    # Test is_empty()
-    if q1.is_empty():
-        print("q1 is empty")
-
-    # Test __len__()
-    print("len q1: ", len(q1))
-
     # Test enqueue()
+    # There should be a resize
     for i in range(15):
         q1.enqueue(i)
-
-    # Test first()
-    print('first element in q1:', q1.first())
+    print("q1._data:", q1._data)
 
     # Test dequeue()
-    for i in range(7):
-        print(q1.dequeue())
+    for i in range(10):
+        q1.dequeue()
+    print("q1._data:", q1._data)
+
+    # There should be a resize
+    q1.dequeue()
+    print("q1._data:", q1._data)
+
+    q1.dequeue()
+    print("q1._data:", q1._data)
+
+    q1.dequeue()
+    print("q1._data:", q1._data)
 
     # Test enqueue()
-    for i in range(15):
-        q1.enqueue(i)
-    
-    # Test dequeue()
-    # Expected output: 0-13
     for i in range(7):
-        print(q1.dequeue())
+        q1.enqueue(i)
+
+    print("q1._data:", q1._data)
+    q1.enqueue(7)
+    print("q1._data:", q1._data)
+
+    # There should be a resize
+    q1.enqueue(8)
+    print("q1._data:", q1._data)
